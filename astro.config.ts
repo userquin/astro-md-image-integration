@@ -53,11 +53,11 @@ export default defineConfig({
         },
         'astro:build:done': async ({ dir }) => {
           const dirName = fileURLToPath(dir.href).replace(/\\/g, '/')
-          const imageSet = new Set(images.map(i => relative(root, i).replace(/\\/g, '/')))
-          await Promise.all(Array.from(imageSet).map(async (i) => {
+          const imageSet = Array.from(new Set(images.map(i => relative(root, i).replace(/\\/g, '/'))))
+          await Promise.all(imageSet.map(async (i) => {
             return fs.mkdir(`${dirName}${dirname(i)}`, { recursive: true })
           }))
-          await Promise.all(Array.from(imageSet).map(async (i) => {
+          await Promise.all(imageSet.map(async (i) => {
             return fs.copyFile(`${root}/${i}`, `${dirName}${i}`)
           }))
         },
