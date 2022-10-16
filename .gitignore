@@ -4,6 +4,7 @@ dist/
 
 # dependencies
 node_modules/
+.idea/
 
 # logs
 npm-debug.log*
