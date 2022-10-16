@@ -37,13 +37,22 @@ export default defineConfig({
                   enforce: 'pre',
                   async transform(code, id) {
                     if (id.endsWith('.md')) {
-                      const matcher = /\\"(\/@virtual-img\/(.*\.[a-z]{3,}))\\"/.exec(code)
+                      const regex = /\\"(\/@virtual-img\/(.*?\.[a-z]{3,}))\\"/gm
+                      let matcher = regex.exec(code)
                       if (matcher) {
+                        let newCode = code
                         const path = dirname(relative(root, id)).replace(/\\/g, '/')
-                        images.push(`${path}/${matcher[2]}`)
-                        const newCode = code.replaceAll(matcher[1], `${path}/${matcher[2]}`)
-                        return newCode.replaceAll(`(${matcher[2]})`, `(${path}/${matcher[2]})`)
+                        do {
+                          images.push(`${path}/${matcher[2]}`)
+                          newCode = newCode.replaceAll(matcher[1], `${path}/${matcher[2]}`)
+                          newCode = newCode.replaceAll(`(${matcher[2]})`, `(${path}/${matcher[2]})`)
+                          matcher = regex.exec(newCode)
+                        }
+                        while (matcher)
+
+                        return newCode
                       }
+                      return code
                     }
                   },
                 },
