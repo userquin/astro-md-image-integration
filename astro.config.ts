@@ -16,20 +16,20 @@ const images: string[] = []
 
 // https://astro.build/config
 export default defineConfig({
-  markdown: {
-    extendDefaultPlugins: true,
-    remarkPlugins: [() => {
-      return (tree) => {
-        findImages(tree)
-      }
-    }],
-  },
   integrations: [
     {
       name: 'astro-md-image-integration',
       hooks: {
         'astro:config:setup': ({ updateConfig }) => {
           updateConfig({
+            markdown: {
+              extendDefaultPlugins: true,
+              remarkPlugins: [() => {
+                return (tree: any) => {
+                  findImages(tree)
+                }
+              }],
+            },
             vite: {
               plugins: [
                 <Plugin>{
