@@ -5,10 +5,13 @@ import { defineConfig } from 'astro/config'
 import type { Plugin } from 'vite'
 
 const findImages = (tree: any) => {
-  if (tree.type === 'image')
-    tree.url = `/@virtual-img/${tree.url}`
-  else
+  if (tree.type === 'image') {
+    if (!tree.url.startsWith('/'))
+      tree.url = `/@virtual-img/${tree.url}`
+  }
+  else {
     tree.children && tree.children.forEach(findImages)
+  }
 }
 
 const root = dirname(fileURLToPath(import.meta.url))
