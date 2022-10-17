@@ -46,7 +46,7 @@ export default defineConfig({
                       let matcher = regex.exec(code)
                       if (matcher) {
                         let newCode = code
-                        let assetPath
+                        let assetPath: string
                         const fileRootDir = dirname(id)
                         do {
                           assetPath = resolve(fileRootDir, matcher[2])
