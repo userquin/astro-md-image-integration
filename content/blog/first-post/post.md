@@ -10,5 +10,6 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 ![Cover 2](imgs/cover.svg)
 
-![Another](imgs/another.svg)
+![Another](./imgs/another.svg)
 
+![Another With Relative path](../second-post/imgs/favicon.svg)
