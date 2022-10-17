@@ -15,7 +15,7 @@ const findImages = (tree: any) => {
   }
 }
 
-const root = cwd()
+let root = cwd()
 const images: string[] = []
 
 // https://astro.build/config
@@ -45,10 +45,10 @@ export default defineConfig({
                       let matcher = regex.exec(code)
                       if (matcher) {
                         let newCode = code
-                        const rootDir = dirname(id)
+                        const fileRootDir = dirname(id)
 
                         do {
-                          const assetPath = resolve(rootDir, matcher[2])
+                          const assetPath = resolve(fileRootDir, matcher[2])
                             .replace(root, '')
                             .split(path.sep)
                             .filter(p => p.trim() !== '')
@@ -70,6 +70,9 @@ export default defineConfig({
               ],
             },
           })
+        },
+        'astro:config:done': ({ config }) => {
+          root = fileURLToPath(config.root)
         },
         'astro:build:done': async ({ dir }) => {
           const dirName = fileURLToPath(dir.href).replace(/\\/g, '/')
