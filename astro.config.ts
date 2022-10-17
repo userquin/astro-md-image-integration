@@ -1,4 +1,4 @@
-import { dirname, relative } from 'path'
+import path, { dirname, relative, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import { promises as fs } from 'fs'
 import { defineConfig } from 'astro/config'
@@ -44,11 +44,18 @@ export default defineConfig({
                       let matcher = regex.exec(code)
                       if (matcher) {
                         let newCode = code
-                        const path = dirname(relative(root, id)).replace(/\\/g, '/')
+                        const rootDir = dirname(id)
+
                         do {
-                          images.push(`${path}/${matcher[2]}`)
-                          newCode = newCode.replaceAll(matcher[1], `${path}/${matcher[2]}`)
-                          newCode = newCode.replaceAll(`(${matcher[2]})`, `(${path}/${matcher[2]})`)
+                          const assetPath = resolve(rootDir, matcher[2])
+                            .replace(root, '')
+                            .split(path.sep)
+                            .filter(p => p.trim() !== '')
+                            .join(path.posix.sep)
+
+                          images.push(assetPath)
+                          newCode = newCode.replaceAll(matcher[1], assetPath)
+                          newCode = newCode.replaceAll(`(${matcher[2]})`, assetPath)
                           matcher = regex.exec(newCode)
                         }
                         while (matcher)
