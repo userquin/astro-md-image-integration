@@ -20,6 +20,7 @@ const images: string[] = []
 
 // https://astro.build/config
 export default defineConfig({
+  base: '/docs',
   integrations: [
     {
       name: 'astro-md-image-integration',
@@ -45,10 +46,10 @@ export default defineConfig({
                       let matcher = regex.exec(code)
                       if (matcher) {
                         let newCode = code
+                        let assetPath
                         const fileRootDir = dirname(id)
-
                         do {
-                          const assetPath = resolve(fileRootDir, matcher[2])
+                          assetPath = resolve(fileRootDir, matcher[2])
                             .replace(root, '')
                             .split(path.sep)
                             .filter(p => p.trim() !== '')
