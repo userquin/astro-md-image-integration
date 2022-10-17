@@ -1,3 +1,5 @@
+import { virtualImagePrefix } from '../utils'
+
 export const MdPlugin = () => {
   return () => (tree: any) => findImages(tree)
 }
@@ -5,7 +7,7 @@ export const MdPlugin = () => {
 function findImages(tree: any) {
   if (tree.type === 'image') {
     if (!tree.url.startsWith('/'))
-      tree.url = `/@virtual-img/${tree.url}`
+      tree.url = `${virtualImagePrefix}${tree.url}`
   }
   else {
     tree.children && tree.children.forEach(findImages)
