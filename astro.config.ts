@@ -1,6 +1,7 @@
-import { dirname, relative } from 'path'
+import path, { dirname, relative, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import { promises as fs } from 'fs'
+import { cwd } from 'process'
 import { defineConfig } from 'astro/config'
 import type { Plugin } from 'vite'
 
@@ -14,11 +15,12 @@ const findImages = (tree: any) => {
   }
 }
 
-const root = dirname(fileURLToPath(import.meta.url))
+let root = cwd()
 const images: string[] = []
 
 // https://astro.build/config
 export default defineConfig({
+  base: '/docs',
   integrations: [
     {
       name: 'astro-md-image-integration',
@@ -44,11 +46,18 @@ export default defineConfig({
                       let matcher = regex.exec(code)
                       if (matcher) {
                         let newCode = code
-                        const path = dirname(relative(root, id)).replace(/\\/g, '/')
+                        let assetPath: string
+                        const fileRootDir = dirname(id)
                         do {
-                          images.push(`${path}/${matcher[2]}`)
-                          newCode = newCode.replaceAll(matcher[1], `${path}/${matcher[2]}`)
-                          newCode = newCode.replaceAll(`(${matcher[2]})`, `(${path}/${matcher[2]})`)
+                          assetPath = resolve(fileRootDir, matcher[2])
+                            .replace(root, '')
+                            .split(path.sep)
+                            .filter(p => p.trim() !== '')
+                            .join(path.posix.sep)
+
+                          images.push(assetPath)
+                          newCode = newCode.replaceAll(matcher[1], assetPath)
+                          newCode = newCode.replaceAll(`(${matcher[2]})`, assetPath)
                           matcher = regex.exec(newCode)
                         }
                         while (matcher)
@@ -62,6 +71,9 @@ export default defineConfig({
               ],
             },
           })
+        },
+        'astro:config:done': ({ config }) => {
+          root = fileURLToPath(config.root)
         },
         'astro:build:done': async ({ dir }) => {
           const dirName = fileURLToPath(dir.href).replace(/\\/g, '/')
