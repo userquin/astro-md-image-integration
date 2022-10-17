@@ -1,6 +1,7 @@
 import path, { dirname, relative, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import { promises as fs } from 'fs'
+import { cwd } from 'process'
 import { defineConfig } from 'astro/config'
 import type { Plugin } from 'vite'
 
@@ -14,7 +15,7 @@ const findImages = (tree: any) => {
   }
 }
 
-const root = dirname(fileURLToPath(import.meta.url))
+const root = cwd()
 const images: string[] = []
 
 // https://astro.build/config
