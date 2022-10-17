@@ -10,7 +10,7 @@ export default function (): AstroIntegration {
   const context: ImagesPluginContext = createContext()
 
   return {
-    name: '@vite-pwa/astro-integration',
+    name: 'astro-md-image-integration',
     hooks: {
       'astro:config:setup': ({ updateConfig }) => {
         updateConfig({
