@@ -27,11 +27,11 @@ importers:
   examples/basic-example:
     specifiers:
       astro: ^1.5.0
-      astro-md-image-plugin: workspace:*
+      astro-md-image-integration: workspace:*
     dependencies:
       astro: 1.5.0
     devDependencies:
-      astro-md-image-plugin: link:../..
+      astro-md-image-integration: link:../..
 
 packages:
 
