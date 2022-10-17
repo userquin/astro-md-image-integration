@@ -1,15 +1,15 @@
 {
-  "name": "astro-md-image-plugin",
+  "name": "astro-md-image-integration",
   "packageManager": "pnpm@7.12.2",
   "type": "module",
   "version": "0.0.0",
   "license": "MIT",
-  "homepage": "https://github.com/userquin/astro-md-image-plugin",
+  "homepage": "https://github.com/userquin/astro-md-image-integration",
   "repository": {
     "type": "git",
-    "url": "https://github.com/userquin/astro-md-image-plugin.git"
+    "url": "https://github.com/userquin/astro-md-image-integration.git"
   },
-  "bugs": "https://github.com/userquin/astro-md-image-plugin/issues",
+  "bugs": "https://github.com/userquin/astro-md-image-integration/issues",
   "keywords": [
     "astro-integration",
     "astro",
