@@ -1,5 +1,9 @@
+import type { MdImageOptions } from './types'
+
 export interface ImagesPluginContext {
-  root: string
+  options: MdImageOptions
+  base: string
+  projectRoot: string
   dev: boolean
   build: boolean
   preview: boolean
@@ -8,9 +12,11 @@ export interface ImagesPluginContext {
   buildImages: string[]
 }
 
-export const createContext = (): ImagesPluginContext => {
+export const createContext = (options: MdImageOptions): ImagesPluginContext => {
   return {
-    root: undefined!,
+    options,
+    base: undefined!,
+    projectRoot: undefined!,
     dev: false,
     preview: false,
     build: false,

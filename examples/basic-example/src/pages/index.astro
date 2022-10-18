@@ -1,15 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-// import FirstPost from '../../content/blog/first-post/post.md';
+import FirstPost from '../../../../content/blog/first-post/post.md';
 import SecondPost from '../../../../content/blog/second-post/post.md';
-// import { Content as DocContent } from '../../content/docs/doc.md';
 // const posts = await Astro.glob('../../content/blog/**/*.md');
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
-	    <!--FirstPost /-->
-		<!--DocContent /-->
+	    <FirstPost />
 	    <SecondPost />
 <!--
 {posts.map((post) => (

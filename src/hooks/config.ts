@@ -17,7 +17,7 @@ export const ConfigSetupHook = (context: ImagesPluginContext): ((config: HookPar
     updateConfig({
       markdown: {
         extendDefaultPlugins: true,
-        remarkPlugins: [MdPlugin()],
+        remarkPlugins: [MdPlugin(context)],
       },
       vite: {
         plugins,
@@ -28,6 +28,7 @@ export const ConfigSetupHook = (context: ImagesPluginContext): ((config: HookPar
 
 export const ConfigDoneHook = (context: ImagesPluginContext): ((config: HookParameters<'astro:config:done'>) => Promise<void>) => {
   return async ({ config }) => {
-    context.root = fileURLToPath(config.root)
+    context.base = config.base
+    context.projectRoot = fileURLToPath(config.root)
   }
 }

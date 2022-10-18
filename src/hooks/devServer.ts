@@ -26,7 +26,7 @@ export const DevServerHook = (context: ImagesPluginContext): ((config: HookParam
             stream.pipe(res)
           })
           stream.on('error', () => {
-            contentType && res.setHeader('Content-Type', contentType)
+            res.setHeader('Content-Type', 'text/plain')
             res.statusCode = 404
             res.end('Not found')
           })
